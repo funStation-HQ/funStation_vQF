@@ -1,0 +1,35 @@
+service: defender-serverless-test-project
+configValidationMode: error
+frameworkVersion: '3'
+provider:
+  name: defender
+  stage: ${opt:stage, 'dev'}
+  stackName: mystack
+  ssot: false
+custom:
+  config: ${file(secrets.${self:provider.stage}.yml)}
+defender:
+  key: ${self:custom.config.keys.api}
+  secret: ${self:custom.config.keys.secret}
+functions: []
+resources:
+  Resources:
+    policies: []
+    contracts: []
+    relayers: []
+    notifications: []
+    categories:
+      low-severity:
+        name: Low Severity
+        description: A default category to be assigned for low risk monitors.
+      medium-severity:
+        name: Medium Severity
+        description: A default category to be assigned for medium risk monitors.
+      high-severity:
+        name: High Severity
+        description: A default category to be assigned for high risk monitors.
+    sentinels: []
+    deployment-configs: []
+    block-explorer-api-keys: []
+plugins:
+  - defender-serverless
